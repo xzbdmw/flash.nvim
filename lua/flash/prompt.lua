@@ -40,6 +40,7 @@ function M.show()
     style = "minimal",
     focusable = false,
     noautocmd = true,
+    hide = true,
   })
 
   M.win = vim.api.nvim_open_win(M.buf, false, config)
