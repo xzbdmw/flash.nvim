@@ -206,7 +206,13 @@ function M.update(state)
   end
 
   for _, extmark in pairs(extmarks) do
-    vim.api.nvim_buf_set_extmark(extmark.buf, state.ns, extmark.row, extmark.col, {
+    local col
+    if vim.g.treesitter_search then
+      col = extmark.col
+    else
+      col = extmark.col + 1
+    end
+    vim.api.nvim_buf_set_extmark(extmark.buf, state.ns, extmark.row, col, {
       virt_text = extmark.text,
       virt_text_pos = style,
       strict = false,

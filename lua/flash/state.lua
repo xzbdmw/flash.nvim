@@ -355,6 +355,7 @@ function M:step(opts)
   local actions = opts.actions or self.opts.actions or {}
   local c = self:get_char()
   if c == nil then
+    vim.g.treesitter_search = false
     vim.api.nvim_input("<esc>")
     if opts.restore ~= false then
       self:restore()
@@ -394,7 +395,7 @@ function M:step(opts)
   end
 
   -- exit if no results and not in regular search mode
-  if #self.results == 0 and not self.pattern:empty() and self.pattern.mode ~= 'search' then
+  if #self.results == 0 and not self.pattern:empty() and self.pattern.mode ~= "search" then
     if self.opts.search.incremental then
       vim.api.nvim_input(c)
     end

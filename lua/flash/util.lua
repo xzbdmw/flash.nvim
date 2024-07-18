@@ -15,6 +15,7 @@ M.LUA_CALLBACK = "\x80\253g"
 M.CMD = "\x80\253h"
 
 function M.exit()
+  vim.g.treesitter_search = false
   vim.api.nvim_feedkeys(M.EXIT, "nx", false)
   vim.api.nvim_feedkeys(M.ESC, "n", false)
 end
