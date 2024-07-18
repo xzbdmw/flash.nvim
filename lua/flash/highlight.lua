@@ -195,7 +195,6 @@ function M.update(state)
       })
       if target and match.pos == target.pos then
         api.nvim_win_set_cursor(0, { match.pos[1], match.pos[2] })
-        require("treesitter-context").context_hlslens_force_update()
       end
     end
   end
