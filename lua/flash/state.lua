@@ -331,7 +331,7 @@ function M:update_target()
     end
   end
 
-  if not (is_visible() and valid) then
+  if not is_visible() and valid then
     self.target = self:find({
       pos = self.pos,
       count = vim.v.count1,
