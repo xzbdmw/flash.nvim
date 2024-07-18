@@ -380,15 +380,10 @@ function M:step(opts)
     c = ".*"
   end
   if c == nil then
-    vim.api.nvim_input("<esc>")
-    if opts.restore ~= false then
-      self:restore()
-    end
-    if opts.abort then
-      opts.abort()
-    end
+    self:jump()
     return
-  elseif actions[c] then
+  end
+  if actions[c] then
     local ret = actions[c](self, c)
     if ret == nil then
       return true
