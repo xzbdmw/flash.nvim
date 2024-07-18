@@ -354,6 +354,9 @@ function M:step(opts)
   end
   local actions = opts.actions or self.opts.actions or {}
   local c = self:get_char()
+  if c == " " then
+    c = ".*"
+  end
   if c == nil then
     vim.g.treesitter_search = false
     vim.api.nvim_input("<esc>")
