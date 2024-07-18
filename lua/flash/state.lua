@@ -319,19 +319,24 @@ function M:update_target()
 
   local info = vim.fn.getwininfo(self.win)[1]
   local function is_visible()
-    return self.target and self.target.pos[1] >= info.topline and self.target.pos[1] <= info.botline
+    return self.target and self.target.pos[1] >= info.topline and self.target.pos[1] < info.botline
   end
 
-  local valid = false
+  local keep_forword = false
   local cursorline, cursorcol = unpack(vim.api.nvim_win_get_cursor(0))
   for _, match in ipairs(self.results) do
     local row, col = match.pos[1], match.pos[2]
-    if cursorline < row or (cursorline == row and col > cursorcol) then
-      valid = true
+    if cursorline < row then
+      keep_forword = true
+    end
+    if cursorline == row then
+      self.target = match
+      -- Whenerver there is a match, do not change search direction
+      keep_forword = true
     end
   end
 
-  if not is_visible() and valid then
+  if not (is_visible() and keep_forword) then
     self.target = self:find({
       pos = self.pos,
       count = vim.v.count1,
