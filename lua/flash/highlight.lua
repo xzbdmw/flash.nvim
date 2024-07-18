@@ -211,7 +211,7 @@ function M.update(state)
 
   for _, extmark in pairs(extmarks) do
     local col
-    if vim.g.treesitter_search then
+    if vim.g.treesitter_search or extmark.col == 0 then
       col = extmark.col
     else
       col = extmark.col + 1
