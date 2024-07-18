@@ -47,6 +47,8 @@ function M.show()
 end
 
 function M.hide()
+  vim.g.treesitter_search = false
+  vim.o.scrolloff = 6
   if M.win and vim.api.nvim_win_is_valid(M.win) then
     vim.api.nvim_win_close(M.win, true)
     M.win = nil

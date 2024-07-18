@@ -358,7 +358,6 @@ function M:step(opts)
     c = ".*"
   end
   if c == nil then
-    vim.g.treesitter_search = false
     vim.api.nvim_input("<esc>")
     if opts.restore ~= false then
       self:restore()
