@@ -322,6 +322,23 @@ function M:update_target()
     return self.target and self.target.pos[1] >= info.topline and self.target.pos[1] <= info.botline
   end
 
+  local valid = false
+  local cursorline, cursorcol = unpack(vim.api.nvim_win_get_cursor(0))
+  for _, match in ipairs(self.results) do
+    local row, col = match.pos[1], match.pos[2]
+    if cursorline < row or (cursorline == row and col > cursorcol) then
+      valid = true
+    end
+  end
+
+  if not (is_visible() and valid) then
+    self.target = self:find({
+      pos = self.pos,
+      count = vim.v.count1,
+      forward = false,
+    })
+  end
+
   if self.opts.search.incremental then
     -- only update cursor if the target is not visible
     -- and we are not activated
