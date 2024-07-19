@@ -380,8 +380,19 @@ function M:step(opts)
     c = ".*"
   end
   if c == nil then
-    self:jump()
-    return
+    if vim.api.nvim_get_mode().mode == "n" then
+      self:jump()
+      return
+    else
+      vim.api.nvim_input("<esc>")
+      if opts.restore ~= false then
+        self:restore()
+      end
+      if opts.abort then
+        opts.abort()
+      end
+      return
+    end
   end
   if actions[c] then
     local ret = actions[c](self, c)

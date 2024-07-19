@@ -193,7 +193,7 @@ function M.update(state)
         strict = false,
         priority = state.opts.highlight.priority + 1,
       })
-      if target and match.pos == target.pos then
+      if target and match.pos == target.pos and vim.api.nvim_get_mode().mode == "n" then
         api.nvim_win_set_cursor(0, { match.pos[1], match.pos[2] })
       end
     end
