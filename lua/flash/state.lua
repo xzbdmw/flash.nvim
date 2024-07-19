@@ -330,7 +330,7 @@ function M:update_target()
       keep_forword = true
       break
     end
-    if cursorline == row and cursorline < col then
+    if cursorline == row and cursorcol <= col then
       self.target = match
       -- Whenerver there is a match, do not change search direction
       keep_forword = true
