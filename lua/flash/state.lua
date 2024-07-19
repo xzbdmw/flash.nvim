@@ -328,11 +328,13 @@ function M:update_target()
     local row, col = match.pos[1], match.pos[2]
     if cursorline < row then
       keep_forword = true
+      break
     end
     if cursorline == row then
       self.target = match
       -- Whenerver there is a match, do not change search direction
       keep_forword = true
+      break
     end
   end
 
