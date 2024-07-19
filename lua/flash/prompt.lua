@@ -50,6 +50,7 @@ end
 function M.hide()
   vim.g.treesitter_search = false
   vim.o.scrolloff = 6
+  vim.wo.winbar = vim.g.flash_winbar
   if M.win and vim.api.nvim_win_is_valid(M.win) then
     vim.api.nvim_win_close(M.win, true)
     M.win = nil
@@ -71,6 +72,11 @@ function M.set(pattern)
     str = str .. item[1]
   end
   vim.api.nvim_buf_set_lines(M.buf, 0, -1, false, { str })
+  local winbar = vim.g.flash_winbar
+  local index = string.find(winbar, [[%=]], nil, true)
+  local name = "  %#FlashPromptIcon#⚡" .. "%#FlashPrompt#" .. str .. "%#Normal#" .. " "
+  local new_winbar = winbar:sub(1, index - 1) .. name .. winbar:sub(index)
+  vim.wo.winbar = new_winbar
   vim.api.nvim_buf_clear_namespace(M.buf, ns, 0, -1)
   local col = 0
   for _, item in ipairs(text) do
