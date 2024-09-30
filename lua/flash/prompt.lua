@@ -74,11 +74,13 @@ function M.set(pattern)
   vim.api.nvim_buf_set_lines(M.buf, 0, -1, false, { str })
   local winbar = vim.g.flash_winbar
   local index = string.find(winbar, [[%=]], nil, true)
-  if index == nil then
-    return
-  end
+  local new_winbar
   local name = "  %#FlashPromptIcon#⚡" .. "%#FlashPrompt#" .. str .. "%#Normal#" .. " "
-  local new_winbar = winbar:sub(1, index - 1) .. name .. winbar:sub(index)
+  if index == nil then
+    new_winbar = winbar .. name
+  else
+    new_winbar = winbar:sub(1, index - 1) .. name .. winbar:sub(index)
+  end
   vim.wo.winbar = new_winbar
   vim.api.nvim_buf_clear_namespace(M.buf, ns, 0, -1)
   local col = 0
