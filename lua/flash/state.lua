@@ -379,7 +379,7 @@ function M:step(opts)
   local actions = opts.actions or self.opts.actions or {}
   local c = self:get_char()
   if c == " " then
-    c = ".*"
+    c = [[.\{-}]]
   end
   if c == nil then
     if vim.api.nvim_get_mode().mode == "n" then
