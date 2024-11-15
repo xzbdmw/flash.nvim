@@ -72,16 +72,20 @@ function M.set(pattern)
     str = str .. item[1]
   end
   vim.api.nvim_buf_set_lines(M.buf, 0, -1, false, { str })
-  local winbar = vim.g.flash_winbar
-  local index = string.find(winbar, [[%=]], nil, true)
-  local new_winbar
-  local name = "  %#FlashPromptIcon#⚡" .. "%#FlashPrompt#" .. str .. "%#Normal#" .. " "
-  if index == nil then
-    new_winbar = winbar .. name
-  else
-    new_winbar = winbar:sub(1, index - 1) .. name .. winbar:sub(index)
+
+  if vim.wo.winbar ~= "" and vim.g.flash_winbar ~= "" then
+    local winbar = vim.g.flash_winbar
+    local index = string.find(winbar, [[%=]], nil, true)
+    local new_winbar
+    local name = "  %#FlashPromptIcon#⚡" .. "%#FlashPrompt#" .. str .. "%#Normal#" .. " "
+    if index == nil then
+      new_winbar = winbar .. name
+    else
+      new_winbar = winbar:sub(1, index - 1) .. name .. winbar:sub(index)
+    end
+    vim.wo.winbar = new_winbar
   end
-  vim.wo.winbar = new_winbar
+
   vim.api.nvim_buf_clear_namespace(M.buf, ns, 0, -1)
   local col = 0
   for _, item in ipairs(text) do
