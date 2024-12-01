@@ -179,7 +179,9 @@ function M.update(state)
       end
     end
   end
-
+  if #state.results > 0 then
+    _G.flash_state = state
+  end
   for _, match in ipairs(state.results) do
     local buf = vim.api.nvim_win_get_buf(match.win)
 
@@ -199,7 +201,7 @@ function M.update(state)
       })
       local mode = vim.api.nvim_get_mode().mode
       if target and match.pos == target.pos and (mode == "n" or mode == "v") then
-        api.nvim_win_set_cursor(0, { match.pos[1], match.pos[2] })
+        vim.api.nvim_win_set_cursor(0, { match.pos[1], match.pos[2] })
       end
     end
   end

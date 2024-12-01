@@ -381,6 +381,9 @@ function M:step(opts)
   if c == " " then
     c = [[.\{-}]]
   end
+  if c == ";" or c == "," then
+    return true
+  end
   if c == nil then
     if vim.api.nvim_get_mode().mode == "n" then
       self:jump()
