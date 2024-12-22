@@ -17,6 +17,11 @@ function M.jump(match, state)
   local is_op = mode:sub(1, 2) == "no"
   local is_visual = mode:sub(1, 1) == "v"
 
+  local opmap = vim.fn.maparg(vim.v.operator, "", false, true) --[[@as any]]
+  if is_op and opmap.lhs == "y" then
+    state.opts.remote_op.motion = true
+    state.opts.remote_op.restore = true
+  end
   if is_op and (state.opts.remote_op.motion or match.win ~= vim.api.nvim_get_current_win()) then
     -- use our special logic for remote operator pending mode
     return M.remote_op(match, state, register)
