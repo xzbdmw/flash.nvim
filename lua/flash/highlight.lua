@@ -162,9 +162,6 @@ function M.update(state)
       })
     else
       local cursorline = vim.api.nvim_win_get_cursor(0)[1]
-      if row + 1 == cursorline then
-        hl_group = "FlashLabelCursorline"
-      end
       -- else highlight the label
       local key = buf .. ":" .. row .. ":" .. col
       extmarks[key] = extmarks[key] or { buf = buf, row = row, col = col, text = {} }
