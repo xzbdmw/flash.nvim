@@ -226,6 +226,11 @@ function M.update(state)
       priority = state.opts.highlight.priority + 2,
     })
   end
+  if vim.g.treesitter_search then
+    pcall(function()
+      require("treesitter-context").update_extmark()
+    end)
+  end
 
   M.cursor(state)
 end

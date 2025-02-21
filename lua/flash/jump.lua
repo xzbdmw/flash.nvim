@@ -183,11 +183,13 @@ function M._jump(match, state, opts)
     local pos = state.opts.jump.pos == "start" and match.pos or match.end_pos
 
     if opts.op then
-      -- fix inclusive/exclusive
-      -- default is exclusive
-      if state.opts.jump.inclusive ~= false then
+      if vim.v.operator == "y" then
+        vim.cmd("normal! v")
+      elseif state.opts.jump.inclusive ~= false then
         vim.cmd("normal! v")
       end
+      -- fix inclusive/exclusive
+      -- default is exclusive
     end
     local current = Pos(match.win)
     local offset = state.opts.jump.offset
